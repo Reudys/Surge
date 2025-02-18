@@ -1,0 +1,26 @@
+name: Deploy to Surge
+
+on:
+  push:
+    branches:
+      - master # Desplegar cuando se hace push a la rama master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Paso 2: Instalar Surge
+      - name: Install Surge
+        run: npm install -g surge
+
+      # Paso 3: Configuración del deploy a Surge
+      - name: Deploy to Surge
+        run: surge . --domain tu-dominio.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
